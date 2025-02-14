@@ -617,9 +617,53 @@
         .big-heart:hover {
             transform: scale(1.1);
         }
+
+        /* Music control button */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 192, 203, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 192, 203, 0.5);
+        }
+
+        .music-control.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
+    <!-- Add audio element -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="music/romantic.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Add music control button -->
+    <div class="music-control" id="musicControl">🎵</div>
+
     <div class="container">
         <h1>Happy Valentine's Day!</h1>
         <div class="name">Ngân Tú</div>
@@ -933,6 +977,52 @@
             this.offsetHeight; // Trigger reflow
             this.style.animation = 'pulse 1s ease-in-out';
         });
+
+        // Music control
+        const music = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        let isPlaying = true; // Set initial state to playing
+
+        // Auto-start music
+        window.addEventListener('load', function() {
+            music.play().then(() => {
+                isPlaying = true;
+                musicControl.classList.add('playing');
+            }).catch(() => {
+                // If autoplay fails, we'll wait for user interaction
+                document.addEventListener('click', function() {
+                    if (!isPlaying) {
+                        music.play();
+                        isPlaying = true;
+                        musicControl.classList.add('playing');
+                    }
+                }, { once: true });
+            });
+        });
+
+        // Function to handle music toggle
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicControl.textContent = '🎵';
+                musicControl.classList.remove('playing');
+            } else {
+                music.play();
+                musicControl.textContent = '🎵';
+                musicControl.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Add click event listener to music control
+        musicControl.addEventListener('click', toggleMusic);
+
+        // Play music when user interacts with the page
+        document.addEventListener('click', function() {
+            if (!isPlaying) {
+                toggleMusic();
+            }
+        }, { once: true });
     </script>
 </body>
 </html>
