@@ -706,7 +706,7 @@
 
             setTimeout(() => {
                 heart.remove();
-            }, 6000);
+            }, 5000);
         }
 
         // Create sparkles
@@ -719,12 +719,12 @@
 
             setTimeout(() => {
                 sparkle.remove();
-            }, 1500);
+            }, 7500);
         }
 
         // Create hearts and sparkles periodically
-        setInterval(createHeart, 5000);
-        setInterval(createSparkle, 10000);
+        setInterval(createHeart, 10000);
+        setInterval(createSparkle, 15000);
 
         function showLove() {
             const loveMessage = document.getElementById('loveMessage');
@@ -732,9 +732,9 @@
             loveMessage.innerHTML = "Mãi mãi thương em, Ngân Tú! 💝";
             
             // Create extra hearts when clicked
-            for(let i = 0; i < 15; i++) {
-                setTimeout(createHeart, i * 10);
-                setTimeout(createSparkle, i * 5);
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createHeart, i * 5000);
+                setTimeout(createSparkle, i * 2000);
             }
         }
 
@@ -909,7 +909,7 @@
         // Call on page load with faster refresh
         window.addEventListener('load', () => {
             createRomanticElements();
-            setInterval(createRomanticElements, 6000); // Every 6 seconds for more continuous animation
+            setInterval(createRomanticElements, 20000); // Every 6 seconds for more continuous animation
         });
 
         function createBurst(centerX, centerY) {
