@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Day Gift Boxes</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1.5s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        /* Page Title */
+        .title-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gift-boxes-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-out 0.5s both;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+        }
+        
+        .special-box {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .special-box .gift-box-front {
+            background: linear-gradient(135deg, #ff9a9e, #f06292);
+            border: 5px solid rgb(247, 0, 255);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 105, 180, 0.4);
+            animation: specialPulse 2s infinite;
+        }
+        
+        .special-box .gift-box-back {
+            background: linear-gradient(135deg, #da4453, #89216b);
+            border: 5px solid rgb(247, 0, 255);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .special-box .ribbon {
+            display: none;
+        }
+        
+        .special-box .heart-topper {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            line-height: 1;
+            color: rgb(255, 0, 242);
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.8), 0 0 20px rgba(255, 20, 147, 0.5);
+            z-index: 10;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: translateX(-50%) scale(1); }
+            15% { transform: translateX(-50%) scale(1.3); }
+            30% { transform: translateX(-50%) scale(1); }
+            45% { transform: translateX(-50%) scale(1.3); }
+            60% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        
+        .special-box .avatar {
+            border: 4px solid rgb(247, 0, 255);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .special-box .person-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: rgb(247, 0, 255);
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+            animation: nameGlow 2s infinite;
+        }
+        
+        .special-box .gift-message {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .special-box .open-gift-btn {
+            background: linear-gradient(135deg, #ff9a9e, #f06292);
+            border: 2px solid gold;
+            padding: 0.6rem 1.2rem;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+        
+        .special-box .open-gift-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.8);
+        }
+        
+        @keyframes specialPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 105, 180, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 50px rgba(255, 105, 180, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 105, 180, 0.4); }
+        }
+        
+        @keyframes nameGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 105, 180, 1); }
+            100% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); }
+        }
+
+        .gift-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+
+        .gift-box:hover .gift-box-inner {
+            transform: rotateY(180deg);
+        }
+
+        .gift-box-front, .gift-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .gift-box-front {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            border: 5px solid #fff;
+        }
+
+        .gift-box-back {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+            transform: rotateY(180deg);
+            border: 5px solid #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .ribbon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff4757;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            border-radius: 50%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .ribbon::before, .ribbon::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background-color: #ff4757;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .ribbon::before {
+            left: -10px;
+            transform: rotate(-30deg);
+        }
+
+        .ribbon::after {
+            right: -10px;
+            transform: rotate(30deg);
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover .avatar {
+            transform: scale(1.1);
+        }
+
+        /* Person Name */
+        .person-name {
+            margin-top: 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gift Message */
+        .gift-message {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #fff;
+        }
+
+        /* Open Gift Button */
+        .open-gift-btn {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid white;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .open-gift-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .music-icon {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .gift-boxes-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gift-boxes-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="music/romantic.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control -->
+    <div class="music-control" onclick="toggleMusic()">
+        <div class="music-icon">♪</div>
+    </div>
+
+    <!-- Page Title -->
+    <div class="title-container">
+        <h1>Women's Day Gift Boxes</h1>
+        <div class="subtitle">Click on a gift box to reveal a special message</div>
+    </div>
+
+    <!-- Gift Boxes Container -->
+    <div class="gift-boxes-container">
+        <!-- Gift Box 1 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/vi.jpg" alt="Person 1" class="avatar">
+                    <div class="person-name">Bảo Vi</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">A special gift just for you!</div>
+                    <a href="gifts/emma.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 2 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/minh.jpg" alt="Person 2" class="avatar">
+                    <div class="person-name">Hồng Minh</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">Something sweet for someone sweet!</div>
+                    <a href="gifts/james.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 3 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/nhu.jpg" alt="Person 3" class="avatar">
+                    <div class="person-name">Cẩm Như</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">A token of love and appreciation!</div>
+                    <a href="gifts/sophia.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 4 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/y.png" alt="Person 4" class="avatar">
+                    <div class="person-name">Thiên Ý</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">Something special for someone special!</div>
+                    <a href="gifts/michael.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="gift-box special-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <div class="heart-topper">❤️</div>
+                    <img src="all_images/huyen.jpg" alt="Phương Huyền" class="avatar">
+                    <div class="person-name">Phương Huyền</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">With all my love on Women's Day! You are extraordinary!</div>
+                    <a href="gifts/phuong-huyen.html" class="open-gift-btn">Open Special Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 6 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/yen.jpg" alt="Person 6" class="avatar">
+                    <div class="person-name">Mỹ Yến</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">A gift wrapped with love!</div>
+                    <a href="gifts/william.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 7 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/ngan.jpg" alt="Person 7" class="avatar">
+                    <div class="person-name">Kim Ngân</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">Just a little something to brighten your day!</div>
+                    <a href="gifts/ava.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 8 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="" alt="Person 8" class="avatar">
+                    <div class="person-name">Gia Quyên</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">Hope this gift makes you smile!</div>
+                    <a href="gifts/noah.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gift Box 9 -->
+        <div class="gift-box">
+            <div class="gift-box-inner">
+                <div class="gift-box-front">
+                    <div class="ribbon"></div>
+                    <img src="all_images/katie.png" alt="Person 9" class="avatar">
+                    <div class="person-name">Katie Hoàng</div>
+                </div>
+                <div class="gift-box-back">
+                    <div class="gift-message">Sending love and warm wishes!</div>
+                    <a href="gifts/isabella.html" class="open-gift-btn">Open Gift</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Create sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            document.body.appendChild(sparkle);
+            
+            // Remove sparkle after animation
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+
+        // Create multiple hearts and sparkles initially
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 300);
+            setTimeout(createSparkle, i * 200);
+        }
+
+        // Create hearts and sparkles periodically
+        setInterval(createHeart, 2000);
+        setInterval(createSparkle, 1000);
+        
+        // Special heart trail for Phương Huyền's box
+        function createSpecialHeart() {
+            const specialBox = document.querySelector('.special-box');
+            if (specialBox) {
+                const rect = specialBox.getBoundingClientRect();
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'absolute';
+                heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+                heart.style.color = '#FF69B4';
+                heart.style.textShadow = '0 0 10px rgba(255, 20, 147, 0.8)';
+                heart.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                heart.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                heart.style.zIndex = '5';
+                heart.style.pointerEvents = 'none';
+                heart.style.opacity = Math.random() * 0.5 + 0.5;
+                heart.style.animation = 'specialHeartFloat 3s ease-in-out forwards';
+                document.body.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        }
+        
+        // Add special heart float animation
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+            @keyframes specialHeartFloat {
+                0% { transform: translateY(0) scale(1); opacity: 0.8; }
+                50% { transform: translateY(-40px) scale(1.5); opacity: 0.9; filter: hue-rotate(30deg); }
+                100% { transform: translateY(-80px) scale(1); opacity: 0; }
+            }
+        `, styleSheet.cssRules.length);
+
+        // Toggle music function
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.play();
+                document.querySelector('.music-icon').innerHTML = '♪';
+            } else {
+                music.pause();
+                document.querySelector('.music-icon').innerHTML = '♫';
+            }
+        }
+
+        // Play music on user interaction
+        document.addEventListener('click', function() {
+            const music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.play();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
